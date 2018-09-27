@@ -1,0 +1,13 @@
+source 'https://rubygems.org'
+
+gem 'sinatra'
+gem 'sinatra-contrib'
+gem 'haml'
+gem 'dotenv'
+gem 'faraday'
+gem 'byebug'
+gem 'eth'
+gem 'jwt'
+gem 'mongo'
+gem 'bigdecimal'
+gem 'thin'
