@@ -17,6 +17,7 @@ class App < Sinatra::Base
     address: ENV['APP_ADDRESS'] || '0x88032398beab20017e61064af3c7c8bd38f4c968',
     app_url: ENV['APP_URL'] || 'http://localhost:8000/data',
     app_reward: 0,
+    app_schema: [ { genre: 40 }, 30],
     app_dependencies: []
   }.freeze
 
@@ -47,7 +48,7 @@ class App < Sinatra::Base
   post '/sign' do
     address = Eth::Utils.public_key_to_address(Eth::Key.personal_recover(params[:code], params[:signature]))
     access_token  = spotify.token(params[:code])
-    genres        = spotify.genres(access_token)
+    genres        = spotify.genres(access_token).map { |g| { genre: g } }[0...30]
     db.update_one({ _id: address.downcase }, { '$set': { genres: genres }}, { upsert: true })
     redirect '/done'
   end
